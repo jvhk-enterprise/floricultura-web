@@ -6,6 +6,8 @@ export interface Product {
   price: number;
   imagePath: string;
   category: string;  
+  cycle: string;
+  amount: number;
   status: string;
   scientificName: string;
   origin?: string;

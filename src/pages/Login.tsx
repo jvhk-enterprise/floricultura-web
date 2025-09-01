@@ -69,7 +69,7 @@ const Login = () => {
               <ShoppingBag className="h-8 w-8 text-primary-foreground" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold">Floricultura</CardTitle>
+          <CardTitle className="text-2xl font-bold">Ambiente Administrativo</CardTitle>
           <CardDescription>
             Entre na sua conta para continuar
           </CardDescription>
@@ -129,11 +129,11 @@ const Login = () => {
               {isLoading ? "Entrando..." : "Entrar"}
             </Button>
             
-            <div className="text-sm text-muted-foreground text-center">
+            {/* <div className="text-sm text-muted-foreground text-center">
               <p>Dados para teste:</p>
               <p><strong>Email:</strong> admin@teste.com</p>
               <p><strong>Senha:</strong> 123456</p>
-            </div>
+            </div> */}
           </CardFooter>
         </form>
       </Card>

@@ -26,6 +26,7 @@ interface ProductFormData {
   price: string;
   cultivationTips: string;
   image: string;
+  amount: number;
 }
 
 const RegisterProduct = () => {
@@ -53,7 +54,8 @@ const RegisterProduct = () => {
       description: '',
       price: '',
       cultivationTips: '',
-      image: ''
+      image: '',
+      amount: 0
     }
   });
 
@@ -318,6 +320,19 @@ const RegisterProduct = () => {
                           <p className="text-sm text-destructive">{errors.price.message}</p>
                         )}
                       </div>
+                      <div className="space-y-2">
+                          <Label htmlFor="height">Quantidade</Label>
+                          <Input
+                            id="amount"
+                            type="number"
+                            {...register('height', { required: 'Quantidade é obrigatória' })}
+                            placeholder="Ex: 150"
+                            className={errors.amount ? 'border-destructive' : ''}
+                          />
+                          {errors.amount && (
+                            <p className="text-sm text-destructive">{errors.amount.message}</p>
+                          )}
+                      </div>
 
                       {/* Descrição */}
                       <div className="space-y-2">
@@ -332,7 +347,7 @@ const RegisterProduct = () => {
                         {errors.description && (
                           <p className="text-sm text-destructive">{errors.description.message}</p>
                         )}
-                      </div>
+                      </div>                   
 
                       {/* Dicas de Cultivo */}
                       <div className="space-y-2">

@@ -79,18 +79,20 @@ const ProductDetail = () => {
   };
 
   const handleQuantityChange = (delta: number) => {
-    setQuantity(prev => Math.max(1, prev + delta));
+    if(quantity < product.amount){
+      setQuantity(prev => Math.max(1, prev + delta));
+    }    
   };
 
   const handleBuy = () => {
     toast({
       title: "Produto adicionado ao carrinho",
-      description: `${quantity}x ${product?.name} adicionado(s) ao carrinho`,
+      description: `${quantity}x ${product?.popularName} adicionado(s) ao carrinho`,
     });
   };
 
   const handleContact = () => {
-    const message = `Olá! Gostaria de saber mais sobre o produto: ${product?.name}`;
+    const message = `Olá! Tenho interesse em ${quantity} unidades do produto: ${product?.popularName}.`;   
     const whatsappUrl = `https://wa.me/5511999999999?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -139,7 +141,7 @@ const ProductDetail = () => {
           <span>•</span>
           <span>{product.category}</span>
           <span>•</span>
-          <span className="text-foreground">{product.name}</span>
+          <span className="text-foreground">{product.popularName}</span>
         </div>
 
         {/* Botão Voltar */}
@@ -177,11 +179,11 @@ const ProductDetail = () => {
                 </Badge>
               </div>
               <h1 className="text-3xl font-bold text-foreground mb-4">
-                {product.name}
+                {product.popularName}
               </h1>
               
               {/* Avaliação e Status */}
-              <div className="flex items-center gap-4 mb-4">
+              {/* <div className="flex items-center gap-4 mb-4">
                 <div className="flex items-center">
                   <span className="text-sm text-muted-foreground">0 de 5</span>
                   <div className="flex ml-2">
@@ -191,7 +193,7 @@ const ProductDetail = () => {
                   </div>
                   <span className="text-sm text-muted-foreground ml-2">(0)</span>
                 </div>
-              </div>
+              </div> */}
 
               {/* Condições ideais */}
               <div className="flex items-center gap-4 mb-6">
@@ -215,7 +217,7 @@ const ProductDetail = () => {
             </div>
 
             {/* Favorito */}
-            <Button
+            {/* <Button
               variant="ghost"
               size="sm"
               onClick={() => setIsFavorite(!isFavorite)}
@@ -223,7 +225,7 @@ const ProductDetail = () => {
             >
               <Heart className={`h-4 w-4 mr-2 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
               Adicionar favorito
-            </Button>
+            </Button> */}
 
             {/* Preços */}
             <div className="space-y-2">
@@ -266,7 +268,7 @@ const ProductDetail = () => {
 
               <div className="space-y-3">
                 <Button 
-                  onClick={handleBuy}
+                  onClick={handleContact}
                   className="w-full h-12 text-base"
                   disabled={product.status === 'SOLD_OUT'}
                 >
@@ -274,25 +276,25 @@ const ProductDetail = () => {
                   Comprar
                 </Button>
                 
-                <Button 
+                {/* <Button 
                   onClick={handleContact}
                   variant="outline"
                   className="w-full h-12 text-base bg-success hover:bg-success/90 text-white border-success"
                 >
                   <MessageCircle className="h-5 w-5 mr-2" />
-                  Fale com uma de nossas vendedoras
-                </Button>
+                  Fale com uma de nossos vendedores
+                </Button> */}
               </div>
             </div>
 
             {/* Promoção */}
-            <Card className="bg-muted/50">
+            {/* <Card className="bg-muted/50">
               <CardContent className="p-4">
                 <p className="text-sm text-center">
                   Compre R$50 para ganhar 50% de desconto no frete!
                 </p>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
         </div>
 
@@ -308,43 +310,48 @@ const ProductDetail = () => {
             <TabsContent value="description" className="mt-6">
               <Card>
                 <CardContent className="p-6 space-y-4">
+                  {product.popularName && (
                   <div className="flex items-center gap-2 mb-4">
                     <span className="text-2xl">🌿</span>
                     <h3 className="text-xl font-semibold">
-                      {product.name} - Cartela com 1 unidade
+                      {product.popularName}
                     </h3>
                   </div>
+                  )}
                   
-                  <p className="text-muted-foreground italic">
+                  {/* <p className="text-muted-foreground italic">
                     Uma coleção de tons naturais e calmantes para transformar seu espaço com elegância tropical.
-                  </p>
+                  </p> */}
 
                   <div className="space-y-4">
+                    {product.description && (
                     <div>
                       <h4 className="font-medium mb-2 flex items-center gap-2">
-                        <span className="text-lg">🪴</span>
                         Descrição do Produto
                       </h4>
                       <p className="text-sm text-muted-foreground leading-relaxed">
-                        O {product.name} reúne bulbos de variedades exclusivas com <strong>folhas em tons de verde claro, menta, verde-limão, verde pastel e variações esbranquiçadas</strong>. Com estética leve, fresca e serena, essas plantas são perfeitas para criar composições tranquilas, minimalistas ou inspiradas na natureza.
+                        {product.description}
                       </p>
                     </div>
+                    )}
 
-                    <div>
+                    {/* <div>
                       <p className="text-sm text-muted-foreground">
                         Ao adquirir esse produto, você receberá <strong>uma variedade surpresa da linha Green Pastel</strong>, produzida no Brasil pela Estância Vitória. Todos os bulbos são entregues <strong>prontos para plantio</strong>, com <strong>alta taxa de brotação</strong> e padrão ornamental muito valorizado em projetos paisagísticos modernos.
                       </p>
-                    </div>
+                    </div> */}
 
+                    {product.cultivationTips && (
                     <div>
                       <h4 className="font-medium mb-2 flex items-center gap-2">
                         <span className="text-lg">💡</span>
-                        Dica
+                        Dica:
                       </h4>
                       <p className="text-sm text-muted-foreground">
-                        Ideal para ambientes iluminados, interiores clean e coleções com foco em tons suaves e harmônicos.
+                        {product.cultivationTips}  
                       </p>
                     </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -360,51 +367,65 @@ const ProductDetail = () => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-3">
+                      {product.scientificName && (
                       <div className="flex items-start gap-2">
                         <span className="text-success">✅</span>
                         <div>
-                          <strong>Nome científico:</strong> Caladium bicolor
+                          <strong>Nome científico:</strong> {product.scientificName}
                         </div>
                       </div>
+                      )}
+                      {product.popularName && (
                       <div className="flex items-start gap-2">
                         <span className="text-success">✅</span>
                         <div>
-                          <strong>Nome popular:</strong> Caládio (linha Green Pastel - variedade surpresa)
+                          <strong>Nome popular:</strong>  {product.popularName}
                         </div>
                       </div>
+                      )}
+                      {product.origin && (
                       <div className="flex items-start gap-2">
                         <span className="text-success">✅</span>
                         <div>
-                          <strong>Origem:</strong> América do Sul (produção nacional)
+                          <strong>Origem:</strong> {product.origin}
                         </div>
                       </div>
+                      )}
+                      {product.cycle && (
                       <div className="flex items-start gap-2">
                         <span className="text-success">✅</span>
                         <div>
-                          <strong>Ciclo:</strong> Perene - rebrota todos os anos
+                          <strong>Ciclo:</strong> {product.cycle}
                         </div>
                       </div>
+                      )}
                     </div>
                     
                     <div className="space-y-3">
+                      {product.height && (
                       <div className="flex items-start gap-2">
                         <span className="text-success">✅</span>
                         <div>
-                          <strong>Altura:</strong> Até 40 cm
+                          <strong>Altura:</strong> {product.height}
                         </div>
                       </div>
+                      )}
+                      {product.idealEnvironment && (
                       <div className="flex items-start gap-2">
                         <span className="text-success">✅</span>
                         <div>
-                          <strong>Ambiente ideal:</strong> Meia-sombra ou luz indireta intensa
+                          <strong>Ambiente ideal:</strong> {product.idealEnvironment}
                         </div>
                       </div>
+                      )}
+                      {product.idealEnvironment && (
                       <div className="flex items-start gap-2">
                         <span className="text-success">✅</span>
                         <div>
-                          <strong>Cultivo:</strong> Muito fácil - perfeito para jardineiros iniciantes ou experientes
+                          <strong>Dificuldade de cultivo:</strong> {product.cultivationDifficult}
                         </div>
                       </div>
+                      )}
                     </div>
                   </div>
                 </CardContent>
