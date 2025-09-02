@@ -1,4 +1,7 @@
-const API_BASE_URL = 'http://localhost:8081/floricultura';
+// const API_BASE_URL = 'http://localhost:8081/floricultura'; //local-url
+
+const API_BASE_URL = 'https://api-floricultura-oqpm.onrender.com'; //prod-url
+
 
 class ApiService {
   private baseUrl: string;
